@@ -1,4 +1,10 @@
-<html><head><link rel="import" href="../bower_components/polymer/polymer.html"><link rel="import" href="../bower_components/paper-styles/typography.html"></head><body><dom-module id="shared-styles"><template><style>
+<html><head><link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-styles/typography.html">
+
+<!-- shared styles for all elements and index.html -->
+</head><body><dom-module id="shared-styles">
+  <template>
+    <style>
       .page-title {
         @apply(--paper-font-display2);
       }
@@ -8,6 +14,15 @@
           color: #fff;
           background: var(--light-primary-color);
         }
+      }
+
+      .tall {
+        background-image: url(/images/image5.jpg);
+      }
+
+
+      paper-toolbar {
+        position: relative;
       }
 
       paper-menu a > *, paper-menu paper-item > *, paper-menu paper-icon-item > * {
@@ -50,6 +65,7 @@
         }
       }
 
+
       .no-padding {
         padding: 0;
       }
@@ -70,4 +86,7 @@
         clear: both;
       }
 
-    </style></template></dom-module></body></html>
+    </style>
+  </template>
+</dom-module>
+</body></html>
