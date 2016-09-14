@@ -1,10 +1,10 @@
-import {Operator} from '../Operator';
-import {Observable} from '../Observable';
-import {Subscriber} from '../Subscriber';
-
-import {OuterSubscriber} from '../OuterSubscriber';
-import {InnerSubscriber} from '../InnerSubscriber';
-import {subscribeToResult} from '../util/subscribeToResult';
+import { Operator } from '../Operator';
+import { Observable } from '../Observable';
+import { Subscriber } from '../Subscriber';
+import { TeardownLogic } from '../Subscription';
+import { OuterSubscriber } from '../OuterSubscriber';
+import { InnerSubscriber } from '../InnerSubscriber';
+import { subscribeToResult } from '../util/subscribeToResult';
 
 /**
  * Emits the most recently emitted value from the source Observable whenever
@@ -52,7 +52,7 @@ class SampleOperator<T> implements Operator<T, T> {
   constructor(private notifier: Observable<any>) {
   }
 
-  call(subscriber: Subscriber<T>, source: any): any {
+  call(subscriber: Subscriber<T>, source: any): TeardownLogic {
     return source._subscribe(new SampleSubscriber(subscriber, this.notifier));
   }
 }

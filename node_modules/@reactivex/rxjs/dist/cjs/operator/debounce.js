@@ -98,7 +98,7 @@ var DebounceSubscriber = (function (_super) {
             this.remove(subscription);
         }
         subscription = subscribeToResult_1.subscribeToResult(this, duration);
-        if (!subscription.isUnsubscribed) {
+        if (!subscription.closed) {
             this.add(this.durationSubscription = subscription);
         }
     };

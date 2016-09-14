@@ -6,6 +6,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var Observable_1 = require('../Observable');
 var tryCatch_1 = require('../util/tryCatch');
+var isFunction_1 = require('../util/isFunction');
 var errorObject_1 = require('../util/errorObject');
 var Subscription_1 = require('../Subscription');
 function isNodeStyleEventEmmitter(sourceObj) {
@@ -30,12 +31,14 @@ function isEventTarget(sourceObj) {
  */
 var FromEventObservable = (function (_super) {
     __extends(FromEventObservable, _super);
-    function FromEventObservable(sourceObj, eventName, selector) {
+    function FromEventObservable(sourceObj, eventName, selector, options) {
         _super.call(this);
         this.sourceObj = sourceObj;
         this.eventName = eventName;
         this.selector = selector;
+        this.options = options;
     }
+    /* tslint:enable:max-line-length */
     /**
      * Creates an Observable that emits events of a specific type coming from the
      * given event target.
@@ -63,7 +66,8 @@ var FromEventObservable = (function (_super) {
      * EventEmitter, NodeList or HTMLCollection to attach the event handler to.
      * @param {string} eventName The event name of interest, being emitted by the
      * `target`.
-     * @param {function(...args: any): T} [selector] An optional function to
+     * @parm {EventListenerOptions} [options] Options to pass through to addEventListener
+     * @param {SelectorMethodSignature<T>} [selector] An optional function to
      * post-process results. It takes the arguments from the event handler and
      * should return a single value.
      * @return {Observable<T>}
@@ -71,19 +75,23 @@ var FromEventObservable = (function (_super) {
      * @name fromEvent
      * @owner Observable
      */
-    FromEventObservable.create = function (target, eventName, selector) {
-        return new FromEventObservable(target, eventName, selector);
+    FromEventObservable.create = function (target, eventName, options, selector) {
+        if (isFunction_1.isFunction(options)) {
+            selector = options;
+            options = undefined;
+        }
+        return new FromEventObservable(target, eventName, selector, options);
     };
-    FromEventObservable.setupSubscription = function (sourceObj, eventName, handler, subscriber) {
+    FromEventObservable.setupSubscription = function (sourceObj, eventName, handler, subscriber, options) {
         var unsubscribe;
         if (isNodeList(sourceObj) || isHTMLCollection(sourceObj)) {
             for (var i = 0, len = sourceObj.length; i < len; i++) {
-                FromEventObservable.setupSubscription(sourceObj[i], eventName, handler, subscriber);
+                FromEventObservable.setupSubscription(sourceObj[i], eventName, handler, subscriber, options);
             }
         }
         else if (isEventTarget(sourceObj)) {
             var source_1 = sourceObj;
-            sourceObj.addEventListener(eventName, handler);
+            sourceObj.addEventListener(eventName, handler, options);
             unsubscribe = function () { return source_1.removeEventListener(eventName, handler); };
         }
         else if (isJQueryStyleEventEmitter(sourceObj)) {
@@ -101,6 +109,7 @@ var FromEventObservable = (function (_super) {
     FromEventObservable.prototype._subscribe = function (subscriber) {
         var sourceObj = this.sourceObj;
         var eventName = this.eventName;
+        var options = this.options;
         var selector = this.selector;
         var handler = selector ? function () {
             var args = [];
@@ -115,7 +124,7 @@ var FromEventObservable = (function (_super) {
                 subscriber.next(result);
             }
         } : function (e) { return subscriber.next(e); };
-        FromEventObservable.setupSubscription(sourceObj, eventName, handler, subscriber);
+        FromEventObservable.setupSubscription(sourceObj, eventName, handler, subscriber, options);
     };
     return FromEventObservable;
 }(Observable_1.Observable));

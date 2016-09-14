@@ -125,7 +125,8 @@ exports.BoundNodeCallbackObservable = BoundNodeCallbackObservable;
 function dispatch(state) {
     var self = this;
     var source = state.source, subscriber = state.subscriber;
-    var callbackFunc = source.callbackFunc, args = source.args, scheduler = source.scheduler;
+    // XXX: cast to `any` to access to the private field in `source`.
+    var _a = source, callbackFunc = _a.callbackFunc, args = _a.args, scheduler = _a.scheduler;
     var subject = source.subject;
     if (!subject) {
         subject = source.subject = new AsyncSubject_1.AsyncSubject();

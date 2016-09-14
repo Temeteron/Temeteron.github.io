@@ -1,11 +1,11 @@
-import {Operator} from '../Operator';
-import {Subscriber} from '../Subscriber';
-import {Observable} from '../Observable';
-import {Subject} from '../Subject';
+import { Operator } from '../Operator';
+import { Subscriber } from '../Subscriber';
+import { Observable } from '../Observable';
+import { Subject } from '../Subject';
 
-import {OuterSubscriber} from '../OuterSubscriber';
-import {InnerSubscriber} from '../InnerSubscriber';
-import {subscribeToResult} from '../util/subscribeToResult';
+import { OuterSubscriber } from '../OuterSubscriber';
+import { InnerSubscriber } from '../InnerSubscriber';
+import { subscribeToResult } from '../util/subscribeToResult';
 
 /**
  * Branch out the source Observable values as a nested Observable whenever
@@ -59,7 +59,7 @@ class WindowOperator<T> implements Operator<T, Observable<T>> {
   call(subscriber: Subscriber<Observable<T>>, source: any): any {
     const windowSubscriber = new WindowSubscriber(subscriber);
     const sourceSubscription = source._subscribe(windowSubscriber);
-    if (!sourceSubscription.isUnsubscribed) {
+    if (!sourceSubscription.closed) {
       windowSubscriber.add(subscribeToResult(windowSubscriber, this.windowBoundaries));
     }
     return sourceSubscription;

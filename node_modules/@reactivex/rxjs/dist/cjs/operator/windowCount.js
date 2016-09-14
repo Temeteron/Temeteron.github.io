@@ -91,14 +91,14 @@ var WindowCountSubscriber = (function (_super) {
         var windowSize = this.windowSize;
         var windows = this.windows;
         var len = windows.length;
-        for (var i = 0; i < len && !this.isUnsubscribed; i++) {
+        for (var i = 0; i < len && !this.closed; i++) {
             windows[i].next(value);
         }
         var c = this.count - windowSize + 1;
-        if (c >= 0 && c % startWindowEvery === 0 && !this.isUnsubscribed) {
+        if (c >= 0 && c % startWindowEvery === 0 && !this.closed) {
             windows.shift().complete();
         }
-        if (++this.count % startWindowEvery === 0 && !this.isUnsubscribed) {
+        if (++this.count % startWindowEvery === 0 && !this.closed) {
             var window_1 = new Subject_1.Subject();
             windows.push(window_1);
             destination.next(window_1);
@@ -107,7 +107,7 @@ var WindowCountSubscriber = (function (_super) {
     WindowCountSubscriber.prototype._error = function (err) {
         var windows = this.windows;
         if (windows) {
-            while (windows.length > 0 && !this.isUnsubscribed) {
+            while (windows.length > 0 && !this.closed) {
                 windows.shift().error(err);
             }
         }
@@ -116,7 +116,7 @@ var WindowCountSubscriber = (function (_super) {
     WindowCountSubscriber.prototype._complete = function () {
         var windows = this.windows;
         if (windows) {
-            while (windows.length > 0 && !this.isUnsubscribed) {
+            while (windows.length > 0 && !this.closed) {
                 windows.shift().complete();
             }
         }

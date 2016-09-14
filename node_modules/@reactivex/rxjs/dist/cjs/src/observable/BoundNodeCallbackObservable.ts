@@ -1,10 +1,10 @@
-import {Observable} from '../Observable';
-import {Subscriber} from '../Subscriber';
-import {Subscription} from '../Subscription';
-import {Scheduler} from '../Scheduler';
-import {tryCatch} from '../util/tryCatch';
-import {errorObject} from '../util/errorObject';
-import {AsyncSubject} from '../AsyncSubject';
+import { Observable } from '../Observable';
+import { Subscriber } from '../Subscriber';
+import { Subscription } from '../Subscription';
+import { Scheduler } from '../Scheduler';
+import { tryCatch } from '../util/tryCatch';
+import { errorObject } from '../util/errorObject';
+import { AsyncSubject } from '../AsyncSubject';
 
 /**
  * We need this JSDoc comment for affecting ESDoc.
@@ -127,7 +127,8 @@ export class BoundNodeCallbackObservable<T> extends Observable<T> {
 function dispatch<T>(state: { source: BoundNodeCallbackObservable<T>, subscriber: Subscriber<T> }) {
   const self = (<Subscription> this);
   const { source, subscriber } = state;
-  const { callbackFunc, args, scheduler } = source;
+  // XXX: cast to `any` to access to the private field in `source`.
+  const { callbackFunc, args, scheduler } = source as any;
   let subject = source.subject;
 
   if (!subject) {

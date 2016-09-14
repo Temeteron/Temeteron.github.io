@@ -34,7 +34,7 @@ var ReplaySubject = (function (_super) {
             subscriber.add(subscriber = new observeOn_1.ObserveOnSubscriber(subscriber, scheduler));
         }
         var len = _events.length;
-        for (var i = 0; i < len && !subscriber.isUnsubscribed; i++) {
+        for (var i = 0; i < len && !subscriber.closed; i++) {
             subscriber.next(_events[i].value);
         }
         return _super.prototype._subscribe.call(this, subscriber);

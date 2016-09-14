@@ -30,8 +30,10 @@ var AsyncSubject = (function (_super) {
         return _super.prototype._subscribe.call(this, subscriber);
     };
     AsyncSubject.prototype.next = function (value) {
-        this.value = value;
-        this.hasNext = true;
+        if (!this.hasCompleted) {
+            this.value = value;
+            this.hasNext = true;
+        }
     };
     AsyncSubject.prototype.complete = function () {
         this.hasCompleted = true;

@@ -1,10 +1,10 @@
-import {Operator} from '../Operator';
-import {Observable, ObservableInput} from '../Observable';
-import {Subscriber} from '../Subscriber';
-import {Subscription} from '../Subscription';
-import {OuterSubscriber} from '../OuterSubscriber';
-import {InnerSubscriber} from '../InnerSubscriber';
-import {subscribeToResult} from '../util/subscribeToResult';
+import { Operator } from '../Operator';
+import { Observable, ObservableInput } from '../Observable';
+import { Subscriber } from '../Subscriber';
+import { Subscription } from '../Subscription';
+import { OuterSubscriber } from '../OuterSubscriber';
+import { InnerSubscriber } from '../InnerSubscriber';
+import { subscribeToResult } from '../util/subscribeToResult';
 
 /**
  * Projects each source value to an Observable which is merged in the output
@@ -111,7 +111,7 @@ class SwitchMapSubscriber<T, I, R> extends OuterSubscriber<T, I> {
 
   protected _complete(): void {
     const {innerSubscription} = this;
-    if (!innerSubscription || innerSubscription.isUnsubscribed) {
+    if (!innerSubscription || innerSubscription.closed) {
       super._complete();
     }
   }

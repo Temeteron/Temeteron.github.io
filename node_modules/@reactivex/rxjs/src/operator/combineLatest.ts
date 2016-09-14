@@ -1,11 +1,11 @@
-import {Observable, ObservableInput} from '../Observable';
-import {ArrayObservable} from '../observable/ArrayObservable';
-import {isArray} from '../util/isArray';
-import {Operator} from '../Operator';
-import {Subscriber} from '../Subscriber';
-import {OuterSubscriber} from '../OuterSubscriber';
-import {InnerSubscriber} from '../InnerSubscriber';
-import {subscribeToResult} from '../util/subscribeToResult';
+import { Observable, ObservableInput } from '../Observable';
+import { ArrayObservable } from '../observable/ArrayObservable';
+import { isArray } from '../util/isArray';
+import { Operator } from '../Operator';
+import { Subscriber } from '../Subscriber';
+import { OuterSubscriber } from '../OuterSubscriber';
+import { InnerSubscriber } from '../InnerSubscriber';
+import { subscribeToResult } from '../util/subscribeToResult';
 const none = {};
 
 /**
@@ -150,7 +150,7 @@ export class CombineLatestSubscriber<T, R> extends OuterSubscriber<T, R> {
       if (this.project) {
         this._tryProject(values);
       } else {
-        this.destination.next(values);
+        this.destination.next(values.slice());
       }
     }
   }

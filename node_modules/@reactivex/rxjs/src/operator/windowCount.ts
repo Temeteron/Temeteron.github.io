@@ -1,7 +1,7 @@
-import {Operator} from '../Operator';
-import {Subscriber} from '../Subscriber';
-import {Observable} from '../Observable';
-import {Subject} from '../Subject';
+import { Operator } from '../Operator';
+import { Subscriber } from '../Subscriber';
+import { Observable } from '../Observable';
+import { Subject } from '../Subject';
 
 /**
  * Branch out the source Observable values as a nested Observable with each
@@ -94,14 +94,14 @@ class WindowCountSubscriber<T> extends Subscriber<T> {
     const windows = this.windows;
     const len = windows.length;
 
-    for (let i = 0; i < len && !this.isUnsubscribed; i++) {
+    for (let i = 0; i < len && !this.closed; i++) {
       windows[i].next(value);
     }
     const c = this.count - windowSize + 1;
-    if (c >= 0 && c % startWindowEvery === 0 && !this.isUnsubscribed) {
+    if (c >= 0 && c % startWindowEvery === 0 && !this.closed) {
       windows.shift().complete();
     }
-    if (++this.count % startWindowEvery === 0 && !this.isUnsubscribed) {
+    if (++this.count % startWindowEvery === 0 && !this.closed) {
       const window = new Subject<T>();
       windows.push(window);
       destination.next(window);
@@ -111,7 +111,7 @@ class WindowCountSubscriber<T> extends Subscriber<T> {
   protected _error(err: any) {
     const windows = this.windows;
     if (windows) {
-      while (windows.length > 0 && !this.isUnsubscribed) {
+      while (windows.length > 0 && !this.closed) {
         windows.shift().error(err);
       }
     }
@@ -121,7 +121,7 @@ class WindowCountSubscriber<T> extends Subscriber<T> {
   protected _complete() {
     const windows = this.windows;
     if (windows) {
-      while (windows.length > 0 && !this.isUnsubscribed) {
+      while (windows.length > 0 && !this.closed) {
         windows.shift().complete();
       }
     }

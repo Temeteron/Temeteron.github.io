@@ -1,8 +1,8 @@
-import {Subject, SubjectSubscriber} from '../Subject';
-import {Operator} from '../Operator';
-import {Observable} from '../Observable';
-import {Subscriber} from '../Subscriber';
-import {Subscription} from '../Subscription';
+import { Subject, SubjectSubscriber } from '../Subject';
+import { Operator } from '../Operator';
+import { Observable } from '../Observable';
+import { Subscriber } from '../Subscriber';
+import { Subscription, TeardownLogic } from '../Subscription';
 
 /**
  * @class ConnectableObservable<T>
@@ -36,7 +36,7 @@ export class ConnectableObservable<T> extends Observable<T> {
       connection = this._connection = new Subscription();
       connection.add(this.source
         .subscribe(new ConnectableSubscriber(this.getSubject(), this)));
-      if (connection.isUnsubscribed) {
+      if (connection.closed) {
         this._connection = null;
         connection = Subscription.EMPTY;
       } else {
@@ -82,7 +82,7 @@ class ConnectableSubscriber<T> extends SubjectSubscriber<T> {
 class RefCountOperator<T> implements Operator<T, T> {
   constructor(private connectable: ConnectableObservable<T>) {
   }
-  call(subscriber: Subscriber<T>, source: any): any {
+  call(subscriber: Subscriber<T>, source: any): TeardownLogic {
 
     const { connectable } = this;
     (<any> connectable)._refCount++;
@@ -90,7 +90,7 @@ class RefCountOperator<T> implements Operator<T, T> {
     const refCounter = new RefCountSubscriber(subscriber, connectable);
     const subscription = source._subscribe(refCounter);
 
-    if (!refCounter.isUnsubscribed) {
+    if (!refCounter.closed) {
       (<any> refCounter).connection = connectable.connect();
     }
 

@@ -1,11 +1,11 @@
-import {Operator} from '../Operator';
-import {Observable, SubscribableOrPromise} from '../Observable';
-import {Subscriber} from '../Subscriber';
-import {Subscription} from '../Subscription';
+import { Operator } from '../Operator';
+import { Observable, SubscribableOrPromise } from '../Observable';
+import { Subscriber } from '../Subscriber';
+import { Subscription, TeardownLogic } from '../Subscription';
 
-import {OuterSubscriber} from '../OuterSubscriber';
-import {InnerSubscriber} from '../InnerSubscriber';
-import {subscribeToResult} from '../util/subscribeToResult';
+import { OuterSubscriber } from '../OuterSubscriber';
+import { InnerSubscriber } from '../InnerSubscriber';
+import { subscribeToResult } from '../util/subscribeToResult';
 
 /**
  * Emits a value from the source Observable only after a particular time span
@@ -61,7 +61,7 @@ class DebounceOperator<T> implements Operator<T, T> {
   constructor(private durationSelector: (value: T) => SubscribableOrPromise<number>) {
   }
 
-  call(subscriber: Subscriber<T>, source: any): any {
+  call(subscriber: Subscriber<T>, source: any): TeardownLogic {
     return source._subscribe(new DebounceSubscriber(subscriber, this.durationSelector));
   }
 }
@@ -108,7 +108,7 @@ class DebounceSubscriber<T, R> extends OuterSubscriber<T, R> {
     }
 
     subscription = subscribeToResult(this, duration);
-    if (!subscription.isUnsubscribed) {
+    if (!subscription.closed) {
       this.add(this.durationSubscription = subscription);
     }
   }

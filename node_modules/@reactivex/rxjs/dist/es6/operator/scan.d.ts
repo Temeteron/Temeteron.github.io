@@ -37,6 +37,3 @@ import { Observable } from '../Observable';
  * @owner Observable
  */
 export declare function scan<T, R>(accumulator: (acc: R, value: T, index: number) => R, seed?: T | R): Observable<R>;
-export interface ScanSignature<T> {
-    <R>(accumulator: (acc: R, value: T, index: number) => R, seed?: T | R): Observable<R>;
-}

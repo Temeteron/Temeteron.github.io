@@ -30,7 +30,7 @@ var Subject = (function (_super) {
     function Subject() {
         _super.call(this);
         this.observers = [];
-        this.isUnsubscribed = false;
+        this.closed = false;
         this.isStopped = false;
         this.hasError = false;
         this.thrownError = null;
@@ -44,7 +44,7 @@ var Subject = (function (_super) {
         return subject;
     };
     Subject.prototype.next = function (value) {
-        if (this.isUnsubscribed) {
+        if (this.closed) {
             throw new ObjectUnsubscribedError_1.ObjectUnsubscribedError();
         }
         if (!this.isStopped) {
@@ -57,7 +57,7 @@ var Subject = (function (_super) {
         }
     };
     Subject.prototype.error = function (err) {
-        if (this.isUnsubscribed) {
+        if (this.closed) {
             throw new ObjectUnsubscribedError_1.ObjectUnsubscribedError();
         }
         this.hasError = true;
@@ -72,7 +72,7 @@ var Subject = (function (_super) {
         this.observers.length = 0;
     };
     Subject.prototype.complete = function () {
-        if (this.isUnsubscribed) {
+        if (this.closed) {
             throw new ObjectUnsubscribedError_1.ObjectUnsubscribedError();
         }
         this.isStopped = true;
@@ -86,11 +86,11 @@ var Subject = (function (_super) {
     };
     Subject.prototype.unsubscribe = function () {
         this.isStopped = true;
-        this.isUnsubscribed = true;
+        this.closed = true;
         this.observers = null;
     };
     Subject.prototype._subscribe = function (subscriber) {
-        if (this.isUnsubscribed) {
+        if (this.closed) {
             throw new ObjectUnsubscribedError_1.ObjectUnsubscribedError();
         }
         else if (this.hasError) {

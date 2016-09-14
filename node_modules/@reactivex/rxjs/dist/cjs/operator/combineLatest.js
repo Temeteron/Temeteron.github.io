@@ -126,7 +126,7 @@ var CombineLatestSubscriber = (function (_super) {
                 this._tryProject(values);
             }
             else {
-                this.destination.next(values);
+                this.destination.next(values.slice());
             }
         }
     };

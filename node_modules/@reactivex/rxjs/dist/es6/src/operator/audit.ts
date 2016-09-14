@@ -1,12 +1,12 @@
-import {Operator} from '../Operator';
-import {Subscriber} from '../Subscriber';
-import {Observable, SubscribableOrPromise} from '../Observable';
-import {Subscription} from '../Subscription';
+import { Operator } from '../Operator';
+import { Subscriber } from '../Subscriber';
+import { Observable, SubscribableOrPromise } from '../Observable';
+import { Subscription, TeardownLogic } from '../Subscription';
 
-import {tryCatch} from '../util/tryCatch';
-import {errorObject} from '../util/errorObject';
-import {OuterSubscriber} from '../OuterSubscriber';
-import {subscribeToResult} from '../util/subscribeToResult';
+import { tryCatch } from '../util/tryCatch';
+import { errorObject } from '../util/errorObject';
+import { OuterSubscriber } from '../OuterSubscriber';
+import { subscribeToResult } from '../util/subscribeToResult';
 
 /**
  * Ignores source values for a duration determined by another Observable, then
@@ -60,7 +60,7 @@ class AuditOperator<T> implements Operator<T, T> {
   constructor(private durationSelector: (value: T) => SubscribableOrPromise<any>) {
   }
 
-  call(subscriber: Subscriber<T>, source: any): any {
+  call(subscriber: Subscriber<T>, source: any): TeardownLogic {
     return source._subscribe(new AuditSubscriber<T, T>(subscriber, this.durationSelector));
   }
 }

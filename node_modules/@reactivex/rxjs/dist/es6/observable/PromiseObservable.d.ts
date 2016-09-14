@@ -9,7 +9,7 @@ import { TeardownLogic } from '../Subscription';
  */
 export declare class PromiseObservable<T> extends Observable<T> {
     private promise;
-    scheduler: Scheduler;
+    private scheduler;
     value: T;
     /**
      * Converts a Promise to an Observable.

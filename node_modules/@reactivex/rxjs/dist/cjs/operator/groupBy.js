@@ -108,7 +108,7 @@ var GroupBySubscriber = (function (_super) {
                 this.add(duration.subscribe(new GroupDurationSubscriber(key, group, this)));
             }
         }
-        if (!group.isUnsubscribed) {
+        if (!group.closed) {
             group.next(element);
         }
     };
@@ -136,7 +136,7 @@ var GroupBySubscriber = (function (_super) {
         this.groups.delete(key);
     };
     GroupBySubscriber.prototype.unsubscribe = function () {
-        if (!this.isUnsubscribed && !this.attemptedToUnsubscribe) {
+        if (!this.closed && !this.attemptedToUnsubscribe) {
             this.attemptedToUnsubscribe = true;
             if (this.count === 0) {
                 _super.prototype.unsubscribe.call(this);
@@ -163,14 +163,14 @@ var GroupDurationSubscriber = (function (_super) {
     };
     GroupDurationSubscriber.prototype._error = function (err) {
         var group = this.group;
-        if (!group.isUnsubscribed) {
+        if (!group.closed) {
             group.error(err);
         }
         this.parent.removeGroup(this.key);
     };
     GroupDurationSubscriber.prototype._complete = function () {
         var group = this.group;
-        if (!group.isUnsubscribed) {
+        if (!group.closed) {
             group.complete();
         }
         this.parent.removeGroup(this.key);
@@ -196,7 +196,7 @@ var GroupedObservable = (function (_super) {
     GroupedObservable.prototype._subscribe = function (subscriber) {
         var subscription = new Subscription_1.Subscription();
         var _a = this, refCountSubscription = _a.refCountSubscription, groupSubject = _a.groupSubject;
-        if (refCountSubscription && !refCountSubscription.isUnsubscribed) {
+        if (refCountSubscription && !refCountSubscription.closed) {
             subscription.add(new InnerRefCountSubscription(refCountSubscription));
         }
         subscription.add(groupSubject.subscribe(subscriber));
@@ -219,7 +219,7 @@ var InnerRefCountSubscription = (function (_super) {
     }
     InnerRefCountSubscription.prototype.unsubscribe = function () {
         var parent = this.parent;
-        if (!parent.isUnsubscribed && !this.isUnsubscribed) {
+        if (!parent.closed && !this.closed) {
             _super.prototype.unsubscribe.call(this);
             parent.count -= 1;
             if (parent.count === 0 && parent.attemptedToUnsubscribe) {

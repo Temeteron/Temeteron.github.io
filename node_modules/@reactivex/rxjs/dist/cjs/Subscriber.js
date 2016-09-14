@@ -115,7 +115,7 @@ var Subscriber = (function (_super) {
         }
     };
     Subscriber.prototype.unsubscribe = function () {
-        if (this.isUnsubscribed) {
+        if (this.closed) {
             return;
         }
         this.isStopped = true;

@@ -41,7 +41,7 @@ Rx.Observable.of(1,2,3)
 To import only what you need by patching (this is useful for size-sensitive bundling):
 
 ```js
-import {Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 Observable.of(1,2,3).map(x => x + '!!!'); // etc
@@ -50,8 +50,8 @@ Observable.of(1,2,3).map(x => x + '!!!'); // etc
 To import what you need and use it with ES next function bind (best overall method, if possible):
 
 ```js
-import {Observable} from 'rxjs/Observable';
-import {map} from 'rxjs/operator/map';
+import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operator/map';
 
 Observable.of(1,2,3)::map(x => x + '!!!'); // etc
 ```
@@ -108,9 +108,16 @@ npm install @reactivex/rxjs@5.0.0-beta.1
 
 ### CDN
 
-For CDN, you can use [npmcdn](https://npmcdn.com):
+For CDN, you can use [unpkg](https://unpkg.com/):
 
-https://npmcdn.com/@reactivex/rxjs/dist/global/Rx.umd.js
+5.0.0-beta.1 - 5.0.0-beta.11:
+
+https://unpkg.com/@reactivex/rxjs/dist/global/Rx.umd.js
+
+
+5.0.0-beta.12 or higher:
+
+https://unpkg.com/@reactivex/rxjs/dist/global/Rx.js
 
 #### Node.js Usage:
 

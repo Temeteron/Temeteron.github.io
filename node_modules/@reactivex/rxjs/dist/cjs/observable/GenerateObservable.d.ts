@@ -1,5 +1,5 @@
-import { Observable } from '../Observable';
 import { Scheduler } from '../Scheduler';
+import { Observable } from '../Observable';
 import { Subscriber } from '../Subscriber';
 import { Subscription } from '../Subscription';
 export declare type ConditionFunc<S> = (state: S) => boolean;

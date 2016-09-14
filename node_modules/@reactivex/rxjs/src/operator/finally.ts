@@ -1,7 +1,7 @@
-import {Operator} from '../Operator';
-import {Subscriber} from '../Subscriber';
-import {Subscription} from '../Subscription';
-import {Observable} from '../Observable';
+import { Operator } from '../Operator';
+import { Subscriber } from '../Subscriber';
+import { Subscription, TeardownLogic } from '../Subscription';
+import { Observable } from '../Observable';
 
 /**
  * Returns an Observable that mirrors the source Observable, but will call a specified function when
@@ -23,7 +23,7 @@ class FinallyOperator<T> implements Operator<T, T> {
   constructor(private callback: () => void) {
   }
 
-  call(subscriber: Subscriber<T>, source: any): any {
+  call(subscriber: Subscriber<T>, source: any): TeardownLogic {
     return source._subscribe(new FinallySubscriber(subscriber, this.callback));
   }
 }

@@ -1,8 +1,9 @@
-import {Operator} from '../Operator';
-import {Subscriber} from '../Subscriber';
-import {ArgumentOutOfRangeError} from '../util/ArgumentOutOfRangeError';
-import {EmptyObservable} from '../observable/EmptyObservable';
-import {Observable} from '../Observable';
+import { Operator } from '../Operator';
+import { Subscriber } from '../Subscriber';
+import { ArgumentOutOfRangeError } from '../util/ArgumentOutOfRangeError';
+import { EmptyObservable } from '../observable/EmptyObservable';
+import { Observable } from '../Observable';
+import { TeardownLogic } from '../Subscription';
 
 /**
  * Emits only the first `count` values emitted by the source Observable.
@@ -56,7 +57,7 @@ class TakeOperator<T> implements Operator<T, T> {
     }
   }
 
-  call(subscriber: Subscriber<T>, source: any): any {
+  call(subscriber: Subscriber<T>, source: any): TeardownLogic {
     return source._subscribe(new TakeSubscriber(subscriber, this.total));
   }
 }

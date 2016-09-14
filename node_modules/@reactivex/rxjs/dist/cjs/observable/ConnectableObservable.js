@@ -35,7 +35,7 @@ var ConnectableObservable = (function (_super) {
             connection = this._connection = new Subscription_1.Subscription();
             connection.add(this.source
                 .subscribe(new ConnectableSubscriber(this.getSubject(), this)));
-            if (connection.isUnsubscribed) {
+            if (connection.closed) {
                 this._connection = null;
                 connection = Subscription_1.Subscription.EMPTY;
             }
@@ -89,7 +89,7 @@ var RefCountOperator = (function () {
         connectable._refCount++;
         var refCounter = new RefCountSubscriber(subscriber, connectable);
         var subscription = source._subscribe(refCounter);
-        if (!refCounter.isUnsubscribed) {
+        if (!refCounter.closed) {
             refCounter.connection = connectable.connect();
         }
         return subscription;

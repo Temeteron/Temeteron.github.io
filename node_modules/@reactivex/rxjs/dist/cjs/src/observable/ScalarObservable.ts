@@ -1,7 +1,7 @@
-import {Scheduler} from '../Scheduler';
-import {Observable} from '../Observable';
-import {Subscriber} from '../Subscriber';
-import {TeardownLogic} from '../Subscription';
+import { Scheduler } from '../Scheduler';
+import { Observable } from '../Observable';
+import { Subscriber } from '../Subscriber';
+import { TeardownLogic } from '../Subscription';
 
 /**
  * We need this JSDoc comment for affecting ESDoc.
@@ -22,7 +22,7 @@ export class ScalarObservable<T> extends Observable<T> {
     }
 
     subscriber.next(value);
-    if (subscriber.isUnsubscribed) {
+    if (subscriber.closed) {
       return;
     }
 
@@ -49,7 +49,7 @@ export class ScalarObservable<T> extends Observable<T> {
       });
     } else {
       subscriber.next(value);
-      if (!subscriber.isUnsubscribed) {
+      if (!subscriber.closed) {
         subscriber.complete();
       }
     }

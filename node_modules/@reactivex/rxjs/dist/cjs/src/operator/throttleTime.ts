@@ -1,9 +1,9 @@
-import {Operator} from '../Operator';
-import {Subscriber} from '../Subscriber';
-import {Scheduler} from '../Scheduler';
-import {Subscription} from '../Subscription';
-import {async} from '../scheduler/async';
-import {Observable} from '../Observable';
+import { Operator } from '../Operator';
+import { Subscriber } from '../Subscriber';
+import { Scheduler } from '../Scheduler';
+import { Subscription, TeardownLogic } from '../Subscription';
+import { async } from '../scheduler/async';
+import { Observable } from '../Observable';
 
 /**
  * Emits a value from the source Observable, then ignores subsequent source
@@ -57,7 +57,7 @@ class ThrottleTimeOperator<T> implements Operator<T, T> {
               private scheduler: Scheduler) {
   }
 
-  call(subscriber: Subscriber<T>, source: any): any {
+  call(subscriber: Subscriber<T>, source: any): TeardownLogic {
     return source._subscribe(new ThrottleTimeSubscriber(subscriber, this.duration, this.scheduler));
   }
 }

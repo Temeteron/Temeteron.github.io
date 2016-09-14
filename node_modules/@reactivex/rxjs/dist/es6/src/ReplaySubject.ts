@@ -1,9 +1,9 @@
-import {Subject} from './Subject';
-import {Scheduler} from './Scheduler';
-import {queue} from './scheduler/queue';
-import {Subscriber} from './Subscriber';
-import {Subscription} from './Subscription';
-import {ObserveOnSubscriber} from './operator/observeOn';
+import { Subject } from './Subject';
+import { Scheduler } from './Scheduler';
+import { queue } from './scheduler/queue';
+import { Subscriber } from './Subscriber';
+import { Subscription } from './Subscription';
+import { ObserveOnSubscriber } from './operator/observeOn';
 
 /**
  * @class ReplaySubject<T>
@@ -37,7 +37,7 @@ export class ReplaySubject<T> extends Subject<T> {
     }
 
     const len = _events.length;
-    for (let i = 0; i < len && !subscriber.isUnsubscribed; i++) {
+    for (let i = 0; i < len && !subscriber.closed; i++) {
       subscriber.next(_events[i].value);
     }
 
