@@ -21255,6 +21255,7 @@ window.addEventListener('WebComponentsReady', function () {
       font-size: 24px;
       font-weight: 400;
     }
+    
 
     paper-material {
       --menu-container-display: none;
@@ -21343,7 +21344,16 @@ window.addEventListener('WebComponentsReady', function () {
       }
 
       .tall {
-        background-image: url("/images/image5.jpg");
+        background-image: initial;
+        background-position-x: initial;
+        background-position-y: initial;
+        background-size: initial;
+        background-repeat-x: initial;
+        background-repeat-y: initial;
+        background-attachment: initial;
+        background-origin: initial;
+        background-clip: initial;
+        background-color: rgb(51, 153, 255);
       }
 
 
@@ -21694,6 +21704,81 @@ Polymer({
       }
     </style>
 
+
+    <paper-material elevation="1">
+      
+      <h2>
+        <a href="https://www.gitcv.com/" target="_blank">
+        GitCV (Web Application)
+        </a>
+      </h2>
+
+      <p>
+        Design and implementation of a software system for human resourcing in programming.
+      </p>
+
+      <p>
+        </p><ul>
+          <li>Data analysis and evaluation of a Github user</li>
+          <li>Creating a CV from your github accout</li>
+          <li>Present in brief the activity, the total stars received and the contribution of the user</li>
+          <li>A tool for HR department to evaluate the developers</li>
+        </ul>
+      <p></p>
+
+      <p>
+        This web app created with created with <a href="https://ionicframework.com/" target="_blank">Ionic 2</a>
+      </p>
+      <p>
+        </p><ul>
+          <li>
+            There is only a client-side implementation
+          </li>
+          <li>
+            No data is being saved
+          </li>
+          <li>
+            Get the data and analyze them, fast and efficiently with the GitCV algorithm
+          </li>
+        </ul>
+      <p></p>
+
+      <p>Deployed to <a href="https://cloud.google.com/appengine/docs" target="_blank">Google App Engine</a></p>
+
+      <p class="date">(May 2017)</p>
+    </paper-material>
+
+
+    <paper-material elevation="1">
+      
+      <h2>
+        <a href="https://any-counter.appspot.com/" target="_blank">
+        Counters &amp; Statistics (Web Application)
+        </a>
+      </h2>
+      <p>
+        Web application
+      </p>
+
+      <p>
+        </p><ul>
+          <li>There are "incremental" and "measurement" type of counters</li>
+          <li>Create as much counters as you want with any name and value</li>
+          <li>Create events, like scrabble or cards and keep your numbers in place</li>
+          <li>Your history of data changes will be saved and will be shown in charts</li>
+          <li>The charts will show you some predictions for your counters based on the history of your data</li>
+          <li>All your data will be saved locally. No requirements from your device</li>
+        </ul>
+      <p></p>
+
+      <p>This web app created with created with Polymer Project of Google and Mozilla LocalForage</p>
+
+      <p>Deployed to <a href="https://cloud.google.com/appengine/docs" target="_blank">Google App Engine</a></p>
+
+      <p class="date">(December 2016)</p>
+    </paper-material>
+
+
     <paper-material elevation="1">
       
       <h2>
@@ -21709,7 +21794,7 @@ Polymer({
       <p>
         </p><ul>
           <li>Create as much counters as you want with any name and value</li>
-          <li>Create events, like monopoly or cards and keep your numbers in place</li>
+          <li>Create events, like scrabble or cards and keep your numbers in place</li>
           <li>All your data will be saved locally. No requirements from your device</li>
         </ul>
       <p></p>
@@ -21766,13 +21851,7 @@ Polymer({
         </ul>
       <p></p>
 
-      <p>
-        Credentials:
-        </p><ul>
-          <li>Username: admin</li>
-          <li>Password: 12345</li>
-        </ul>
-      <p></p>
+      
 
       <p>
         View <a href="https://github.com/Temeteron/Athletic-Team" target="_blank">Code </a>on Github
@@ -21782,7 +21861,7 @@ Polymer({
 
       <p>Created with Django, framework of Python and Bootstrap</p>
 
-      <p>Deployed to <a href="https://www.pythonanywhere.com" target="_blank">Python Anywhere</a></p>
+      
 
       <p class="date">(January 2016)</p>
     </paper-material>
